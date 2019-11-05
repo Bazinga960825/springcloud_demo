@@ -1,10 +1,21 @@
 server:
-  port: 9091
+  port: ${port:9091}
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/springcloud
     username: root
     password: root
+  application:
+    name: user-service
 mybatis:
   type-aliases-package: cn.itcast.user.pojo
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:12315/eureka
+  instance:
+    ip-address: 127.0.0.1 #ip地址
+    prefer-ip-address: true #倾向于使用ip，而不是host名
+    lease-renewal-interval-in-seconds: 30 #续约间隔
+    lease-expiration-duration-in-seconds: 90 #服务失效时间

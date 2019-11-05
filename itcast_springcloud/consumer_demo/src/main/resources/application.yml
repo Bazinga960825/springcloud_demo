@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: consumer-demo
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:12315/eureka
+    registry-fetch-interval-seconds: 30 #获取服务地址列表间隔时间
