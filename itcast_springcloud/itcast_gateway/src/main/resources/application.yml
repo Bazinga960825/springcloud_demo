@@ -5,6 +5,14 @@ spring:
     name: api-gateway
   cloud:
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            #allowedOrigins: * # 这种写法或者下面的都可以，*表示全部
+            allowedOrigins:
+            - "http://docs.spring.io"
+            allowedMethods:
+            - GET
       routes:
         # 路由id，可以随意写
         - id: user-service-route
@@ -23,7 +31,9 @@ spring:
           filters:
             # 添加请求路径的前缀
             - PrefixPath=/user
-              
+            # 自定义过滤器
+            - MyParam=name
+
 #          # 路由断言，可以配置映射路径
 #          predicates:
 #            - Path=/api/user/**
@@ -31,9 +41,28 @@ spring:
 #            # 表示过滤1个路径，2表示两个路径，以此类推
 #            - StripPrefix=1
 
+#      default-filters:
+#        # 响应头过滤器，对输出的响应设置其头部属性名称为X-Response-Default-MyName，值为itcast；
+#        # 如果有多个参数多则重写一行设置不同的参数
+#        - AddResponseHeader=X-Response-Default-MyName, itcast
+
 eureka:
   client:
     service-url:
       defaultZone: http://127.0.0.1:12315/eureka
   instance:
     prefer-ip-address: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000
+
+ribbon:
+  ConnectTimeout: 1000
+  ReadTimeout: 2000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 0

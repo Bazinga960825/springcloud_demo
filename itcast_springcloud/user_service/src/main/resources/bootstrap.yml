@@ -1,0 +1,28 @@
+spring:
+  cloud:
+    config:
+      # 与远程仓库中的配置文件的application保持一致
+      name: user
+      # 远程仓库中的配置文件的profile保持一致
+      profile: dev
+      # 远程仓库中的版本保持一致
+      label: master
+      discovery:
+        # 使用配置中心
+        enabled: true
+        # 配置中心服务id
+        service-id: config-server
+  # rabbitmq的配置信息；如下配置的rabbit都是默认值，其实可以完全不配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:12315/eureka
+
+# bootstrap.yml配置的是系统级别的参数配置，相当于项目启动时的引导文件，内容相对固定
+# application.yml是应用级别的参数配置，加载的时间比application早，配置的是微服务的一些常规配置参数，变化较频繁
